@@ -1,5 +1,6 @@
 package view;
 import java.util.*;
+import view.ViewUtil;
 
 public class ConsoleView {
 	
@@ -21,10 +22,17 @@ public class ConsoleView {
     
 		try {
 			int choice = DisplayOption();
+			
+			if (choice > 5 || choice == 0) {
+			   	throw new Exception("");
+			}
+			
 			getUserChoice(choice);
 		} catch(Exception err) {
+			 System.out.println("");
 			 System.out.println("Error invalid choice \nPlease try again");
 			 System.out.println("");
+			 ViewUtil.PressAnyKeyToContinue();
 			 DisplayMenu(); // Recursion
 		}
 		
