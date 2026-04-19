@@ -38,19 +38,13 @@ public class ConsoleView {
 		
 	}
      
-    public static int getUserChoice(int choiceNum) {
+    public static void getUserChoice(int choiceNum) {
+    	switch(choiceNum) {
+        	case 1:
+    	       	
+    		break;
+    	}
     	
-         try {
-        	int choice = (int) choiceNum;
-        	System.out.println("Your choice: " + choice);
-         }
-         
-         catch(Exception e) {
-        	
-         }
-    	
-    	
-    	return 0;
     	
     }
 	

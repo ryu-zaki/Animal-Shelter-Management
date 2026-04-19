@@ -1,3 +1,4 @@
+package com.shelter.main;
 import view.ConsoleView;
 
 public class AppLauncher {
