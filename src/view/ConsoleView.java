@@ -1,5 +1,8 @@
 package view;
 import java.util.*;
+import model.AnimalModel;
+import com.shelter.model.*;
+
 import view.ViewUtil;
 
 public class ConsoleView {
@@ -27,7 +30,7 @@ public class ConsoleView {
 			   	throw new Exception("");
 			}
 			
-			getUserChoice(choice);
+		   getUserChoice(choice);
 		} catch(Exception err) {
 			 System.out.println("");
 			 System.out.println("Error invalid choice \nPlease try again");
@@ -38,11 +41,42 @@ public class ConsoleView {
 		
 	}
      
+    public static void DisplayAllAnimals() {
+    	Animal[] animals = AnimalModel.renderAnimals();
+    	if (animals.length == 0) {
+    		System.out.println("Animals list is empty.");
+    		
+    		ViewUtil.PressAnyKeyToContinue();
+			DisplayMenu(); // Recursion
+    		return;
+    	}
+    	System.out.println("Animal List:");
+    	for (Animal a: animals) {
+    		System.out.println(
+    			 a.getName() + " | " + a.getType() + " | " + a.getAge()
+    		);
+    	}
+    }
+     
+    
+     
     public static void getUserChoice(int choiceNum) {
     	switch(choiceNum) {
         	case 1:
-    	       	
+        		DisplayAllAnimals();
     		break;
+    		
+        	case 2:
+        		
+            break;
+            
+        	case 3: 
+        		
+            break;
+            
+        	case 4:
+        		
+        	break;
     	}
     	
     	
