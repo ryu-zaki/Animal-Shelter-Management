@@ -72,7 +72,12 @@ public class ConsoleView {
 
 				 case AddOptions.TYPE:
 					 String animalType = scan.nextLine();
-					 AnimalModel.addTypeModel(animalType);
+					 try {
+						 AnimalModel.addTypeModel(animalType);
+					 } catch(Exception err) {
+						 System.out.println(err.getMessage());
+						 i--;
+					 }
 				 break;
 
 
@@ -108,8 +113,8 @@ public class ConsoleView {
 		 }
          AnimalModel.pushNewAnimal();
 		 System.out.println("NEW ANIMAL HAS BEEN ADDED.");
-		 ViewUtil.PressAnyKeyToContinue();
-		 DisplayMenu(); // Recursion
+		ViewUtil.PressAnyKeyToContinue();
+		DisplayMenu(); // Recursion
 	}
     
      
@@ -122,8 +127,6 @@ public class ConsoleView {
         	case 2:
 				AddAnimalView();
 				break;
-
-            
         	case 3: 
         		
             break;

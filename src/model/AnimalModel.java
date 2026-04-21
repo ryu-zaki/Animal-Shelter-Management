@@ -11,13 +11,13 @@ public class AnimalModel {
 		return AnimalController.getAllAnimals();
 	}
 
-	public static void addTypeModel(String userInput) {
+	public static void addTypeModel(String userInput) throws Exception {
 		try {
-			AnimalType type = AnimalType.valueOf(userInput);
+			AnimalType type = AnimalType.valueOf(userInput.toUpperCase());
 			addPendingAnimal.setType(type);
 
 		}  catch(Exception err) {
-              throw err;
+              throw new Exception("Animal Type not available");
 		}
 	}
 
