@@ -1,9 +1,7 @@
 package view;
 import java.util.*;
 import model.AnimalModel;
-import com.shelter.model.*;
-
-import view.ViewUtil;
+import com.shelter.types.*;
 
 public class ConsoleView {
 	
@@ -33,7 +31,7 @@ public class ConsoleView {
 		   getUserChoice(choice);
 		} catch(Exception err) {
 			 System.out.println("");
-			 System.out.println("Error invalid choice \nPlease try again");
+			 System.out.println(err.getMessage().isEmpty() ? "Error invalid choice \nPlease try again" : err.getMessage());
 			 System.out.println("");
 			 ViewUtil.PressAnyKeyToContinue();
 			 DisplayMenu(); // Recursion
@@ -57,7 +55,67 @@ public class ConsoleView {
     		);
     	}
     }
-     
+
+	public static void AddAnimalView() {
+		 System.out.flush();
+		 Scanner scan = new Scanner(System.in);
+		 System.out.println("Add New Animal");
+		 System.out.println("====================");
+		 AddOptions[] options = {AddOptions.TYPE, AddOptions.NAME, AddOptions.AGE};
+
+		 for (int i = 0; i < options.length; i++) {
+			 AddOptions option = options[i];
+
+			 System.out.print("Enter " + option.getDescription() + " :");
+
+			 switch(option) {
+
+				 case AddOptions.TYPE:
+					 String animalType = scan.nextLine();
+					 AnimalModel.addTypeModel(animalType);
+				 break;
+
+
+				 case AddOptions.NAME:
+					 String animalName = scan.nextLine();
+					 try {
+						 AnimalModel.addNameModel(animalName);
+					 } catch(Exception err) {
+						 System.out.println(err.getMessage());
+						i--;
+					 }
+                 break;
+
+				 case AddOptions.AGE:
+					 try {
+						 int animalsAge = scan.nextInt();
+
+						 try {
+							 AnimalModel.addAgeModel(animalsAge);
+						 } catch(Exception err) {
+							 System.out.println(err.getMessage());
+							 i--;
+						 }
+					 }
+
+					 catch(Exception err) {
+						 System.out.println("Age must be an Integer.");
+						 scan.nextLine();
+						 i--;
+					 }
+
+
+					 break;
+			 }
+
+		 }
+
+
+
+
+
+
+	}
     
      
     public static void getUserChoice(int choiceNum) {
@@ -67,8 +125,9 @@ public class ConsoleView {
     		break;
     		
         	case 2:
-        		
-            break;
+				AddAnimalView();
+				break;
+
             
         	case 3: 
         		
