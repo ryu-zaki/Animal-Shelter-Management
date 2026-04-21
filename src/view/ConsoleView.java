@@ -2,7 +2,7 @@ package view;
 import java.io.IOException;
 import java.util.*;
 import model.AnimalModel;
-import com.shelter.model.*;
+import com.shelter.types.*;
 import org.jline.reader.LineReader;
 import org.jline.reader.LineReaderBuilder;
 import org.jline.terminal.Terminal;
@@ -42,7 +42,7 @@ public class ConsoleView {
 		   getUserChoice(choice);
 		} catch(Exception err) {
 			 System.out.println("");
-			 System.out.println("Error invalid choice \nPlease try again");
+			 System.out.println(err.getMessage().isEmpty() ? "Error invalid choice \nPlease try again" : err.getMessage());
 			 System.out.println("");
 			 ViewUtil.PressAnyKeyToContinue();
 			 DisplayMenu(); // Recursion
@@ -51,8 +51,8 @@ public class ConsoleView {
 	}
      
     public static void DisplayAllAnimals() {
-    	Animal[] animals = AnimalModel.renderAnimals();
-    	if (animals.length == 0) {
+    	ArrayList<Animal> animals = AnimalModel.renderAnimals();
+    	if (animals.isEmpty()) {
     		System.out.println("Animals list is empty.");
     		
     		ViewUtil.PressAnyKeyToContinue();
@@ -66,7 +66,67 @@ public class ConsoleView {
     		);
     	}
     }
-     
+
+	public static void AddAnimalView() {
+		 System.out.flush();
+		 Scanner scan = new Scanner(System.in);
+		 System.out.println("Add New Animal");
+		 System.out.println("====================");
+		 AddOptions[] options = {AddOptions.TYPE, AddOptions.NAME, AddOptions.AGE};
+
+		 for (int i = 0; i < options.length; i++) {
+			 AddOptions option = options[i];
+
+			 System.out.print("Enter " + option.getDescription() + " :");
+
+			 switch(option) {
+
+				 case AddOptions.TYPE:
+					 String animalType = scan.nextLine();
+					 try {
+						 AnimalModel.addTypeModel(animalType);
+					 } catch(Exception err) {
+						 System.out.println(err.getMessage());
+						 i--;
+					 }
+				 break;
+
+
+				 case AddOptions.NAME:
+					 String animalName = scan.nextLine();
+					 try {
+						 AnimalModel.addNameModel(animalName);
+					 } catch(Exception err) {
+						 System.out.println(err.getMessage());
+						i--;
+					 }
+                 break;
+
+				 case AddOptions.AGE:
+					 try {
+						 int animalsAge = scan.nextInt();
+
+						 try {
+							 AnimalModel.addAgeModel(animalsAge);
+						 } catch(Exception err) {
+							 System.out.println(err.getMessage());
+							 i--;
+						 }
+					 }
+
+					 catch(Exception err) {
+						 System.out.println("Age must be an Integer.");
+						 scan.nextLine();
+						 i--;
+					 }
+					 break;
+			 }
+		 }
+         AnimalModel.pushNewAnimal();
+		 System.out.println("NEW ANIMAL HAS BEEN ADDED.");
+		ViewUtil.PressAnyKeyToContinue();
+		DisplayMenu(); // Recursion
+	}
     
      
     public static void getUserChoice(int choiceNum) {
@@ -76,9 +136,8 @@ public class ConsoleView {
     		break;
     		
         	case 2:
-        		
-            break;
-            
+				AddAnimalView();
+				break;
         	case 3: 
         		
             break;

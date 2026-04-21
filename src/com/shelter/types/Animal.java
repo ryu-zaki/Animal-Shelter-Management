@@ -1,5 +1,4 @@
-package com.shelter.model;
-import com.shelter.model.AnimalType;
+package com.shelter.types;
 
 public class Animal {
    private String name;
