@@ -1,22 +1,33 @@
 package view;
+import java.io.IOException;
 import java.util.*;
 import model.AnimalModel;
 import com.shelter.types.*;
+import org.jline.reader.LineReader;
+import org.jline.reader.LineReaderBuilder;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+import org.jline.utils.InfoCmp;
+import org.jline.utils.NonBlockingReader;
+
+import view.ViewUtil;
 
 public class ConsoleView {
 	
 	 public static int DisplayOption() {
+
 		 System.out.println("Welcome to Animal Shelter System." + "\n" +
-					"[1] View All" + "\n" +
-				    "[2] Add Animal" + "\n" + 
-					"[3] Search by Name \n" + 
-				    "[4] Update Animal \n" + 
-					"[5] Exit");
-		    Scanner scan = new Scanner(System.in);
-			System.out.println("Enter your choice: ");
-			int choice = scan.nextInt();
-			
-			return choice;
+				 "[1] View All" + "\n" +
+				 "[2] Add Animal" + "\n" +
+				 "[3] Search by Name \n" +
+				 "[4] Update Animal \n" +
+				 "[5] Exit");
+		 Scanner scan = new Scanner(System.in);
+		 System.out.println("Enter your choice: ");
+
+		 int choice = scan.nextInt();
+
+		 return choice;
 	 }
    
      public static void DisplayMenu() {
