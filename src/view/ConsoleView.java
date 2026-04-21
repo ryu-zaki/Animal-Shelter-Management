@@ -42,8 +42,8 @@ public class ConsoleView {
 	}
      
     public static void DisplayAllAnimals() {
-    	Animal[] animals = AnimalModel.renderAnimals();
-    	if (animals.length == 0) {
+    	ArrayList<Animal> animals = AnimalModel.renderAnimals();
+    	if (animals.isEmpty()) {
     		System.out.println("Animals list is empty.");
     		
     		ViewUtil.PressAnyKeyToContinue();
