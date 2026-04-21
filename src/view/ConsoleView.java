@@ -103,18 +103,13 @@ public class ConsoleView {
 						 scan.nextLine();
 						 i--;
 					 }
-
-
 					 break;
 			 }
-
 		 }
-
-
-
-
-
-
+         AnimalModel.pushNewAnimal();
+		 System.out.println("NEW ANIMAL HAS BEEN ADDED.");
+		 ViewUtil.PressAnyKeyToContinue();
+		 DisplayMenu(); // Recursion
 	}
     
      

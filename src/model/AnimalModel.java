@@ -35,4 +35,8 @@ public class AnimalModel {
 		addPendingAnimal.setAge(animalAge);
 	 }
 
+	 public static void pushNewAnimal() {
+		 AnimalController.AddAnimal(addPendingAnimal);
+	 }
+
 }
