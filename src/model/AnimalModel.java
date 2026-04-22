@@ -2,6 +2,7 @@ package model;
 import controller.AnimalController;
 import com.shelter.types.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AnimalModel {
 
@@ -9,6 +10,12 @@ public class AnimalModel {
 
 	public static ArrayList<Animal> renderAnimals() {
 		return AnimalController.getAllAnimals();
+	}
+
+	public static List<Animal> filterAnimalsByName(String searchedName) {
+	   	return AnimalController.getAllAnimals().stream()
+				.filter(animal -> animal.getName().contains(searchedName))
+				.collect(Collectors.toList());
 	}
 
 	public static void addTypeModel(String userInput) throws Exception {

@@ -127,6 +127,28 @@ public class ConsoleView {
 		ViewUtil.PressAnyKeyToContinue();
 		DisplayMenu(); // Recursion
 	}
+
+	public static void displayAnimalByName(String name) {
+
+	}
+
+	public static void searchByNameAnimal() {
+		 System.out.print("Search Name: ");
+		 Scanner scan = new Scanner(System.in);
+		 String name = scan.nextLine();
+
+		 List<Animal> results = AnimalModel.filterAnimalsByName(name);
+         if (results.isEmpty()) {
+			 System.out.println("List is Empty. Name doesnt have a match");
+		 } else {
+			 results.forEach(animal -> {
+				 System.out.println(animal.getName() + " | " + animal.getType() + " | " + animal.getAge());
+			 });
+		 }
+
+		ViewUtil.PressAnyKeyToContinue();
+		DisplayMenu(); // Recursion
+	}
     
      
     public static void getUserChoice(int choiceNum) {
@@ -138,8 +160,8 @@ public class ConsoleView {
         	case 2:
 				AddAnimalView();
 				break;
-        	case 3: 
-        		
+        	case 3:
+				searchByNameAnimal();
             break;
             
         	case 4:
