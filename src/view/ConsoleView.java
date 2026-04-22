@@ -3,14 +3,10 @@ import java.io.IOException;
 import java.util.*;
 import model.AnimalModel;
 import com.shelter.types.*;
-import org.jline.reader.LineReader;
-import org.jline.reader.LineReaderBuilder;
-import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
-import org.jline.utils.InfoCmp;
-import org.jline.utils.NonBlockingReader;
 
 import view.ViewUtil;
+
+import javax.swing.text.View;
 
 public class ConsoleView {
 	
@@ -127,6 +123,100 @@ public class ConsoleView {
 		ViewUtil.PressAnyKeyToContinue();
 		DisplayMenu(); // Recursion
 	}
+
+	public static void displayAnimalByName(String name) {
+
+	}
+
+	public static void searchByNameAnimal() {
+		 System.out.print("Search Name: ");
+		 Scanner scan = new Scanner(System.in);
+		 String name = scan.nextLine();
+
+		 List<Animal> results = AnimalModel.filterAnimalsByName(name);
+         if (results.isEmpty()) {
+			 System.out.println("List is Empty. Name doesnt have a match");
+		 } else {
+			 results.forEach(animal -> {
+				 System.out.println(animal.getName() + " | " + animal.getType() + " | " + animal.getAge());
+			 });
+		 }
+
+		ViewUtil.PressAnyKeyToContinue();
+		DisplayMenu(); // Recursion
+	}
+
+	public static void updateAnimalByName() {
+         Scanner scan = new Scanner(System.in);
+		 System.out.println("===== EDIT ANIMAL =====");
+		 System.out.print("Enter animal's name: ");
+		 String name = scan.nextLine();
+
+		 Optional<Animal> targetAnimal = AnimalModel.checkIfAnimalExist(name);
+
+		 if (targetAnimal.isPresent()) {
+			 System.out.println("[1] NAME");
+			 System.out.println("[2] TYPE");
+			 System.out.println("[3] AGE");
+
+			 System.out.print("Enter your choice: ");
+
+			 String userChoice = scan.nextLine();
+
+			 switch(userChoice) {
+				 case "1":
+					 System.out.print("Update your name: ");
+					 String newName = scan.nextLine();
+					 AnimalModel.updateName(newName);
+					 break;
+
+				 case "2":
+					 System.out.print("Update your type: ");
+					 String targetType = scan.nextLine();
+					 AnimalType type = AnimalType.valueOf(targetType.toUpperCase());
+					 AnimalModel.updateType(type);
+					 break;
+
+				 case "3":
+					 System.out.print("Update your age: ");
+					 int age = scan.nextInt();
+					 AnimalModel.updateAge(age);
+					 break;
+
+				 default:
+
+					 System.out.println("Option not available");
+					 break;
+			 }
+
+			 System.out.println("Animal Data has been updated.");
+			 ViewUtil.PressAnyKeyToContinue();
+			 System.out.println("");
+			 System.out.println("[1] UPDATE MORE");
+			 System.out.println("[2] MENU");
+			 System.out.print("Your choice: ");
+			 String choice = scan.nextLine();
+
+			 switch(choice) {
+				 case "1":
+					updateAnimalByName();
+					scan.nextLine();
+					 break;
+
+				 case "2":
+					 DisplayMenu();
+					 break;
+			 }
+
+
+		 } else {
+			 System.out.println("Animal Doesn't Exist.");
+		 }
+
+		ViewUtil.PressAnyKeyToContinue();
+		DisplayMenu(); // Recursion
+
+	}
     
      
     public static void getUserChoice(int choiceNum) {
@@ -138,12 +228,12 @@ public class ConsoleView {
         	case 2:
 				AddAnimalView();
 				break;
-        	case 3: 
-        		
+        	case 3:
+				searchByNameAnimal();
             break;
             
         	case 4:
-        		
+				updateAnimalByName();
         	break;
     	}
     	

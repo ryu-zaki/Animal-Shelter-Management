@@ -2,13 +2,21 @@ package model;
 import controller.AnimalController;
 import com.shelter.types.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AnimalModel {
 
 	private static Animal addPendingAnimal = new Animal("", 0, AnimalType.DOG);
+	private static Animal updatePendingAnimal = new Animal("", 0, AnimalType.DOG);
 
 	public static ArrayList<Animal> renderAnimals() {
 		return AnimalController.getAllAnimals();
+	}
+
+	public static List<Animal> filterAnimalsByName(String searchedName) {
+	   	return AnimalController.getAllAnimals().stream()
+				.filter(animal -> animal.getName().contains(searchedName))
+				.collect(Collectors.toList());
 	}
 
 	public static void addTypeModel(String userInput) throws Exception {
@@ -38,5 +46,32 @@ public class AnimalModel {
 	 public static void pushNewAnimal() {
 		 AnimalController.AddAnimal(addPendingAnimal);
 	 }
+
+	 public static Optional<Animal> checkIfAnimalExist(String animalName) {
+		Optional<Animal> animal = renderAnimals().stream()
+				.filter(a -> a.getName().equals(animalName)).findFirst();
+
+         animal.ifPresent(value -> updatePendingAnimal = value);
+
+		 return animal;
+	 }
+
+	 public static void updateName(String newName) {
+		updatePendingAnimal.setName(newName);
+	 }
+
+	 public static void updateType(AnimalType animalType) {
+		updatePendingAnimal.setType(animalType);
+	 }
+
+	 public static void updateAge(int age) {
+		updatePendingAnimal.setAge(age);
+	 }
+
+	 public static void UpdateAnimalModel() {
+		AnimalController.UpdateAnimal(updatePendingAnimal.getName(), updatePendingAnimal);
+	 }
+
+
 
 }
