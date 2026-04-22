@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 public class AnimalModel {
 
 	private static Animal addPendingAnimal = new Animal("", 0, AnimalType.DOG);
+	private static Animal updatePendingAnimal = new Animal("", 0, AnimalType.DOG);
 
 	public static ArrayList<Animal> renderAnimals() {
 		return AnimalController.getAllAnimals();
@@ -45,5 +46,32 @@ public class AnimalModel {
 	 public static void pushNewAnimal() {
 		 AnimalController.AddAnimal(addPendingAnimal);
 	 }
+
+	 public static Optional<Animal> checkIfAnimalExist(String animalName) {
+		Optional<Animal> animal = renderAnimals().stream()
+				.filter(a -> a.getName().equals(animalName)).findFirst();
+
+         animal.ifPresent(value -> updatePendingAnimal = value);
+
+		 return animal;
+	 }
+
+	 public static void updateName(String newName) {
+		updatePendingAnimal.setName(newName);
+	 }
+
+	 public static void updateType(AnimalType animalType) {
+		updatePendingAnimal.setType(animalType);
+	 }
+
+	 public static void updateAge(int age) {
+		updatePendingAnimal.setAge(age);
+	 }
+
+	 public static void UpdateAnimalModel() {
+		AnimalController.UpdateAnimal(updatePendingAnimal.getName(), updatePendingAnimal);
+	 }
+
+
 
 }
